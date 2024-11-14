@@ -1,9 +1,4 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[18]:
-
-
+# Import necessary libraries
 import gradio as gr
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
@@ -11,10 +6,9 @@ from io import BytesIO
 import tempfile
 
 
-# In[19]:
-
-
+# Define the function to generate a word cloud from a text file
 def generate_wordcloud(file):
+    # Read the text file content
     with open(file.name, "r", encoding="utf-8") as f:
         text = f.read()
 
@@ -32,23 +26,17 @@ def generate_wordcloud(file):
         temp_file_path = temp_file.name
         plt.savefig(temp_file_path, format='png')
     
-    # Close the temporary file
+    # Close the plot to free up resources
     plt.close()
-    
+
+    # Return the path to the temporary file containing the word cloud image
     return temp_file_path
-
-
-# In[20]:
-
 
 # Define input and output interfaces
 inputs = gr.inputs.File(label="Upload Text File")
 output = gr.outputs.Image(type='filepath', label="Word Cloud")  
 
-
-# In[21]:
-
-
+# Create and launch the Gradio interface
 grapp = gr.Interface(
     generate_wordcloud,
     inputs=inputs,
@@ -59,13 +47,9 @@ grapp = gr.Interface(
 )
 
 
-# In[22]:
-
-
+# Launch the interface on a specific server port
 grapp.launch(server_port=9087)
 
-
-# In[ ]:
 
 
 
